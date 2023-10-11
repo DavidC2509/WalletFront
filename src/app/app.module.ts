@@ -12,6 +12,7 @@ import { LayoutModule } from './layout/layout.module';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MarkdownModule } from 'ngx-markdown';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 
 
@@ -38,8 +39,12 @@ import { MarkdownModule } from 'ngx-markdown';
     LayoutModule,
 
     // 3rd party modules that require global configuration via forRoot
-    MarkdownModule.forRoot({})
-
+    MarkdownModule.forRoot({}),
+    NgxWebstorageModule.forRoot({
+      prefix: 'wallet',
+      separator: '-',
+      caseSensitive: true,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

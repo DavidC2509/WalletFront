@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
-import { UserService } from 'app/core/user/user.service';
+import { AuthServerProvider } from 'app/core/auth/AuthServerProvider.Service';
 
 @Component({
     selector     : 'auth-sign-in',
@@ -27,7 +27,7 @@ export class AuthSignInComponent implements OnInit
      */
     constructor(
         private _activatedRoute: ActivatedRoute,
-        private _authService: UserService,
+        private _authService: AuthServerProvider,
         private _formBuilder: FormBuilder,
         private _router: Router
     )
