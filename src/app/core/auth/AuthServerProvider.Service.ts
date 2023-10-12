@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService } from 'ngx-webstorage';
 import { environment } from '../../../environments/environment';
 import { AUTH_TOKEN } from '../const';
+import { SendSignUpModel } from '../models/SendSignUpModel';
+import { SendSignInModel } from '../models/SendSignInModel';
 
 type JwtToken = {
   token: string;
@@ -13,7 +15,7 @@ type JwtToken = {
 
 @Injectable()
 export class AuthServerProvider {
-  private baseUrlPGW: string = environment.apiBaseUrl;
+  private baseUrl: string = environment.apiBaseUrl;
   private _authenticated: boolean = false;
 
   constructor(
@@ -26,10 +28,10 @@ export class AuthServerProvider {
     return tokenInLocalStorage;
   }
 
-  public signIn(user: any): Observable<void> {
+  public signIn(user: SendSignInModel): Observable<void> {
     return this.http
       .post<JwtToken>(
-        `${this.baseUrlPGW}/account/api/authenticate`,
+        `${this.baseUrl}/user/login`,
         user
       )
       .pipe(map((response) => {
@@ -37,6 +39,19 @@ export class AuthServerProvider {
         // Set the authenticated flag to true
         this._authenticated = true;
       }));
+  }
+
+
+  public signUp(body: SendSignUpModel): Observable<HttpResponse<any>> {
+    return this.http
+      .post(
+        `${this.baseUrl}/user`,
+        body,
+        {
+          observe: 'response',
+        }
+      );
+
   }
 
   public logout(): Observable<void> {
@@ -54,6 +69,7 @@ export class AuthServerProvider {
  * Check the authentication status
  */
   check(): Observable<boolean> {
+    
     // Check if the user is logged in
     if (this._authenticated) {
       return of(true);

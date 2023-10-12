@@ -3,16 +3,16 @@
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
             <div class="w-12">
-                <img src="assets/images/WalletLogo2.webp">
+                <img src="assets/images/walletLogo.jpg">
             </div>
 
             <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign up</div>
             <div class="flex items-baseline mt-0.5 font-medium">
-                <div>Don't have an account?</div>
+                <div>Already have an account?</div>
                 <a
                     class="ml-1 text-primary-500 hover:underline"
-                    [routerLink]="['/user/sign-up']">Sign up
+                    [routerLink]="['/user/sign-in']">Sign in
                 </a>
             </div>
 
@@ -27,22 +27,43 @@
                 {{alert.message}}
             </fuse-alert>
 
-            <!-- Sign in form -->
+            <!-- Sign Up form -->
             <form
                 class="mt-8"
-                [formGroup]="signInForm"
-                #signInNgForm="ngForm">
+                [formGroup]="signUpForm">
+
+                <!-- Name field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Name</mat-label>
+                    <input
+                        matInput
+                        [formControlName]="'firstName'">
+                    <mat-error *ngIf="signUpForm.get('firstName').hasError('required')">
+                        Name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Last name</mat-label>
+                    <input
+                        matInput
+                        [formControlName]="'lastName'">
+                    <mat-error *ngIf="signUpForm.get('lastName').hasError('required')">
+                        LastName name is required
+                    </mat-error>
+                </mat-form-field>
 
                 <!-- Email field -->
                 <mat-form-field class="w-full">
                     <mat-label>Email address</mat-label>
                     <input
+                        id="email"
                         matInput
-                        [formControlName]="'userName'">
-                    <mat-error *ngIf="signInForm.get('userName').hasError('required')">
+                        [formControlName]="'email'">
+                    <mat-error *ngIf="signUpForm.get('email').hasError('required')">
                         Email address is required
                     </mat-error>
-                    <mat-error *ngIf="signInForm.get('userName').hasError('userName')">
+                    <mat-error *ngIf="signUpForm.get('email').hasError('email')">
                         Please enter a valid email address
                     </mat-error>
                 </mat-form-field>
@@ -74,63 +95,31 @@
                     </mat-error>
                 </mat-form-field>
 
-                <!-- Actions -->
-                <div class="inline-flex items-end justify-between w-full mt-1.5">
-                    <mat-checkbox
-                        [color]="'primary'"
-                        [formControlName]="'rememberMe'">
-                        Remember me
-                    </mat-checkbox>
-                    <a
-                        class="text-md font-medium text-primary-500 hover:underline"
-                        [routerLink]="['/forgot-password']">Forgot password?
-                    </a>
-                </div>
+                <!-- Company field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Phone Number</mat-label>
+                    <input
+                        matInput
+                        [formControlName]="'phoneNumber'">
+                </mat-form-field>
+
 
                 <!-- Submit button -->
                 <button
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button
                     [color]="'primary'"
-                    [disabled]="signInForm.disabled"
-                    (click)="signIn()">
-                    <span *ngIf="!signInForm.disabled">
-                        Sign in
+                    [disabled]="signUpForm.disabled"
+                    (click)="signUp()">
+                    <span *ngIf="!signUpForm.disabled">
+                        Create your free account
                     </span>
                     <mat-progress-spinner
-                        *ngIf="signInForm.disabled"
+                        *ngIf="signUpForm.disabled"
                         [diameter]="24"
                         [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
 
-                <!-- Separator -->
-                <div class="flex items-center mt-8">
-                    <div class="flex-auto mt-px border-t"></div>
-                    <div class="mx-2 text-secondary">Or continue with</div>
-                    <div class="flex-auto mt-px border-t"></div>
-                </div>
-
-                <!-- Single sign-on buttons -->
-                <div class="flex items-center mt-8 space-x-4">
-                    <a
-                        class="flex-auto btn"
-                        type="button"
-                        href="https://www.linkedin.com/in/david-fernando-aa7618200/"
-                        mat-stroked-button>
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'feather:linkedin'"></mat-icon>
-                    </a>
-                    <a
-                        class="flex-auto btn"
-                        href="https://github.com/DavidC2509"
-                        type="button"
-                        mat-stroked-button>
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'feather:github'"></mat-icon>
-                    </a>
-                </div>
             </form>
         </div>
     </div>
@@ -154,26 +143,5 @@
             </defs>
             <rect width="220" height="192" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"></rect>
         </svg>
-        <!-- @formatter:on -->
-        <!-- Content -->
-        <div class="z-10 relative w-full max-w-2xl">
-            <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Bienvenido</div>
-                <div>Billetera Digital</div>
-            </div>
-            <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
-                Empieza a controlar tus billetera aca mismo
-            </div>
-            <div class="flex items-center mt-8">
-                <div class="flex flex-0 items-center -space-x-1.5">
-                    <img
-                        class="flex-0  ring-4 ring-offset-1"
-                        src="assets/images/Wallet.png">
-                   
-                </div>
-            </div>
-            <div class="ml-4 font-medium tracking-tight text-gray-400">Mas de toda Bolivia lo usa</div>
-
-        </div>
     </div>
 </div>

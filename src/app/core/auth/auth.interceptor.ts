@@ -28,13 +28,14 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // Clone the request object
     let newReq = req.clone();
+    
     if (
-      this._authService.getToken
+      this._authService.getToken()
     ) {
       newReq = req.clone({
         headers: req.headers.set(
           'Authorization',
-          'Bearer ' + this._authService.getToken
+          'Bearer ' + this._authService.getToken()
         ),
       });
     }

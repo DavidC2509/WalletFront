@@ -1,31 +1,32 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthServerProvider } from 'app/core/auth/AuthServerProvider.Service';
+import { SendSignUpModel } from 'app/core/models/SendSignUpModel';
 
 @Component({
-    selector: 'auth-sign-in',
-    templateUrl: './sign-in.component.html',
+    selector: 'auth-sign-up',
+    templateUrl: './sign-up.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AuthSignInComponent implements OnInit {
-    @ViewChild('signInNgForm') signInNgForm: NgForm;
+export class AuthSignUpComponent implements OnInit {
+    @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
         message: ''
     };
-    signInForm: FormGroup;
+
+    signUpForm: FormGroup;
     showAlert: boolean = false;
 
     /**
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
         private _authService: AuthServerProvider,
         private _formBuilder: FormBuilder,
         private _router: Router
@@ -40,13 +41,15 @@ export class AuthSignInComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-
         // Create the form
-        this.signInForm = this._formBuilder.group({
-            userName: ['', [Validators.required, Validators.email]],
+        this.signUpForm = this._formBuilder.group({
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
-            rememberMe: ['']
-        });
+            phoneNumber: [''],
+        }
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -54,52 +57,43 @@ export class AuthSignInComponent implements OnInit {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Sign in
+     * Sign up
      */
-    signIn(): void {
-        // Return if the form is invalid
-        if (this.signInForm.invalid) {
+    signUp(): void {
+        // Do nothing if the form is invalid
+        if (this.signUpForm.invalid) {
             return;
         }
 
         // Disable the form
-        this.signInForm.disable();
+        this.signUpForm.disable();
 
         // Hide the alert
         this.showAlert = false;
 
-        // Sign in
-        this._authService.signIn(this.signInForm.value)
-            .subscribe(
-                () => {
-
-                    // Set the redirect url.
-                    // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-                    // to the correct page after a successful sign in. This way, that url can be set via
-                    // routing file and we don't have to touch here.
-                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-
-                    // Navigate to the redirect url
-                    this._router.navigateByUrl(redirectURL);
-
-                },
-                (response) => {
-
-                    // Re-enable the form
-                    this.signInForm.enable();
+        var body = this.signUpForm.value as SendSignUpModel;
+        body.userName = body.email;
+        // Sign up
+        this._authService.signUp(body)
+            .subscribe({
+                complete: () => { this._router.navigateByUrl('user/sign-in'); },
+                error: () => {
+                    this.signUpForm.enable();
 
                     // Reset the form
-                    this.signInNgForm.resetForm();
+                    this.signUpNgForm.resetForm();
 
                     // Set the alert
                     this.alert = {
                         type: 'error',
-                        message: 'Wrong email or password'
+                        message: 'Something went wrong, please try again.'
                     };
 
                     // Show the alert
                     this.showAlert = true;
-                }
+                },
+            }
+
             );
     }
 }

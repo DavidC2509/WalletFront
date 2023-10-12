@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: '/genesis/api',
+  apiBaseUrl: '/api',
 };
 
 /*

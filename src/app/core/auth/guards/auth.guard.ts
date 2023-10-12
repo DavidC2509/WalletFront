@@ -7,7 +7,7 @@ export const noAuthGuard = () => {
   const authService = inject(AuthServerProvider);
   const router = inject(Router);
 
-  if (!authService.check) {
+  if (!authService.check()) {
     return true;
   }
 

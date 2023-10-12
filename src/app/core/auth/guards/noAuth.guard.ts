@@ -7,10 +7,11 @@ export const noAuthGuard = () => {
   const authService = inject(AuthServerProvider);
   const router = inject(Router);
 
-  if (authService.check) {
+  
+  if (authService.check()) {
     return true;
   }
 
   // Redirect to the login page
-  return router.parseUrl('/login');
+  return router.parseUrl('/user/sign-in');
 };
