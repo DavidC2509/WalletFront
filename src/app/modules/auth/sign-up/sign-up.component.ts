@@ -92,8 +92,6 @@ export class AuthSignUpComponent implements OnInit {
                     // Show the alert
                     this.showAlert = true;
                 },
-            }
-
-            );
+            });
     }
 }

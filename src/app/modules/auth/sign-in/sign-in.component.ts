@@ -62,29 +62,29 @@ export class AuthSignInComponent implements OnInit {
             return;
         }
 
-        // Disable the form
-        this.signInForm.disable();
-
         // Hide the alert
         this.showAlert = false;
 
-        // Sign in
+
         this._authService.signIn(this.signInForm.value)
-            .subscribe(
-                () => {
+            .subscribe({
+                next: (value) => {
+                    
+                    if (!value.result) {
+                        // Set the alert
+                        this.alert = {
+                            type: 'error',
+                            message: 'Wrong email or password'
+                        };
 
-                    // Set the redirect url.
-                    // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-                    // to the correct page after a successful sign in. This way, that url can be set via
-                    // routing file and we don't have to touch here.
-                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-
-                    // Navigate to the redirect url
-                    this._router.navigateByUrl(redirectURL);
+                        // Show the alert
+                        this.showAlert = true;
+                    } else {
+                        this._router.navigateByUrl('/dashboard/home');
+                    }
 
                 },
-                (response) => {
-
+                error: () => {
                     // Re-enable the form
                     this.signInForm.enable();
 
@@ -99,7 +99,9 @@ export class AuthSignInComponent implements OnInit {
 
                     // Show the alert
                     this.showAlert = true;
-                }
-            );
+                },
+            });
+
+
     }
 }

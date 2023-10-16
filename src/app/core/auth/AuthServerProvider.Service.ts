@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { DebugElement, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,11 +24,12 @@ export class AuthServerProvider {
   ) { }
 
   getToken(): string {
+    
     const tokenInLocalStorage: string | null = this._localStorageService.retrieve(AUTH_TOKEN);
     return tokenInLocalStorage;
   }
 
-  public signIn(user: SendSignInModel): Observable<void> {
+  public signIn(user: SendSignInModel): Observable<JwtToken> {
     return this.http
       .post<JwtToken>(
         `${this.baseUrl}/user/login`,
@@ -38,6 +39,7 @@ export class AuthServerProvider {
         this.authenticateSuccess(response)
         // Set the authenticated flag to true
         this._authenticated = true;
+        return response;
       }));
   }
 
@@ -57,6 +59,7 @@ export class AuthServerProvider {
   public logout(): Observable<void> {
     return new Observable((observer) => {
       this._localStorageService.clear(AUTH_TOKEN);
+      this._authenticated = false;
       observer.complete();
     });
   }
@@ -68,20 +71,21 @@ export class AuthServerProvider {
   /**
  * Check the authentication status
  */
-  check(): Observable<boolean> {
-    
+  check(): boolean {
+
     // Check if the user is logged in
     if (this._authenticated) {
-      return of(true);
+      return true;
     }
 
     // Check the access token availability
-    if (!this.getToken) {
-      return of(false);
+    if (this.getToken()) {
+      this._authenticated = true;
+      return true;
     }
 
 
-    return of(true);
+    return false;
 
   }
 }

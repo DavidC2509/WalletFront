@@ -8,7 +8,8 @@ export const noAuthGuard = () => {
   const router = inject(Router);
 
   
-  if (authService.check()) {
+  if (!authService.check()) {
+    
     return true;
   }
 
