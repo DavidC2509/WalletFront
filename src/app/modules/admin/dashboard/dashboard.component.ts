@@ -27,11 +27,13 @@ export class DashboardComponent {
   }
 
   private loadDataAccount(): void {
+    
     this.accountService
       .getListAccount()
       .subscribe(
         {
           next: (value) => {
+            
             this.dataAccounts = value.body;
             this.dataAccounts.forEach(a => this.totalTxAmount += a.salary);
 
@@ -41,11 +43,13 @@ export class DashboardComponent {
   }
 
   private loadDataMovement(): void {
+    
     this.movementService
       .getListMovement()
       .subscribe(
         {
           next: (value) => {
+            
             this.dataMovement = value.body;
           }
         });

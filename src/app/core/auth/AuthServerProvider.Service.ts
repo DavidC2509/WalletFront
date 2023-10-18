@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { AUTH_TOKEN } from '../const';
 import { SendSignUpModel } from '../models/SendSignUpModel';
 import { SendSignInModel } from '../models/SendSignInModel';
+import { AuthUtils } from './auth.utils';
 
 type JwtToken = {
   token: string;
@@ -17,6 +18,7 @@ type JwtToken = {
 export class AuthServerProvider {
   private baseUrl: string = environment.apiBaseUrl;
   private _authenticated: boolean = false;
+  private accessToken: string;
 
   constructor(
     private http: HttpClient,
@@ -24,8 +26,8 @@ export class AuthServerProvider {
   ) { }
 
   getToken(): string {
-    
     const tokenInLocalStorage: string | null = this._localStorageService.retrieve(AUTH_TOKEN);
+    this.accessToken = tokenInLocalStorage;
     return tokenInLocalStorage;
   }
 
@@ -56,12 +58,9 @@ export class AuthServerProvider {
 
   }
 
-  public logout(): Observable<void> {
-    return new Observable((observer) => {
-      this._localStorageService.clear(AUTH_TOKEN);
-      this._authenticated = false;
-      observer.complete();
-    });
+  public logout(): void {
+    this._localStorageService.clear(AUTH_TOKEN);
+    this._authenticated = false;
   }
 
   private authenticateSuccess(response: JwtToken): void {
@@ -80,6 +79,11 @@ export class AuthServerProvider {
 
     // Check the access token availability
     if (this.getToken()) {
+
+      if (AuthUtils.isTokenExpired(this.accessToken)) {
+        console.log("ingreso por token expirado");
+        return false
+      }
       this._authenticated = true;
       return true;
     }

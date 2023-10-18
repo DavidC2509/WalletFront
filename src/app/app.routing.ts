@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { noAuthGuard } from './core/auth/guards/noAuth.guard';
 import { AuthGuard } from './core/auth/guards/auth.guard';
+import { InitialDataResolver } from './app.resolvers';
 
 // @formatter:off
 /* eslint-disable max-len */
