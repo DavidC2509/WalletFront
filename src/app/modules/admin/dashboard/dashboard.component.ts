@@ -11,7 +11,7 @@ import { MovementService } from '../services/Movement.service';
 })
 export class DashboardComponent {
 
-  totalTxAmount: 0;
+  totalTxAmount: number = 0;
 
 
   dataMovement: MovementModel[];
@@ -27,15 +27,15 @@ export class DashboardComponent {
   }
 
   private loadDataAccount(): void {
-    
+
     this.accountService
       .getListAccount()
       .subscribe(
         {
           next: (value) => {
-            
+            value.body.forEach(a => this.totalTxAmount += a.salary);
+            value.body.forEach(a => a.nameCategory = a.categoryAccount.name);
             this.dataAccounts = value.body;
-            this.dataAccounts.forEach(a => this.totalTxAmount += a.salary);
 
           }
         });
@@ -43,13 +43,12 @@ export class DashboardComponent {
   }
 
   private loadDataMovement(): void {
-    
+
     this.movementService
       .getListMovement()
       .subscribe(
         {
           next: (value) => {
-            
             this.dataMovement = value.body;
           }
         });

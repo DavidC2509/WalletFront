@@ -32,20 +32,24 @@ export class TableComponent implements OnInit, OnChanges {
     private _changeDetectorRef: ChangeDetectorRef,
     private _fuseConfirmationService: FuseConfirmationService,
     private _formBuilder: UntypedFormBuilder
-  ) {}
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.totalSize = this.data.length;
-    this.sliceData();
+    if (this.data) {
+      this.totalSize = this.data.length;
+      this.sliceData();
+    }
   }
 
   public ngOnInit(): void {
     this.displayedColumns = this.displayedColumns.concat(
       this.columns.map((x) => x.columnDef)
     );
-    this.data = this.data.map((r) => ({ ...r, actions: '' }));
-    console.info(this.columns);
-    this.totalSize = this.data.length;
+    if (this.data) {
+      this.data = this.data.map((r) => ({ ...r, actions: '' }));
+      console.info(this.columns);
+      this.totalSize = this.data.length;
+    }
   }
 
   public onAction(type: string, row: any) {

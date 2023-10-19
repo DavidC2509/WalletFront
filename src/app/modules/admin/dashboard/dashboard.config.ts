@@ -9,5 +9,5 @@ export const configTableMovement = [
 export const configTableAccount = [
   { columnDef: 'name', header: 'Compania', type: 'text' },
   { columnDef: 'salary', header: 'Salario', type: 'number' },
-  { columnDef: 'categoryAccount.name', header: 'Categoria', type: 'text' },
+  { columnDef: 'nameCategory', header: 'Categoria', type: 'text' },
 ];

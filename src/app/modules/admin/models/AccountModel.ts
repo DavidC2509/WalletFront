@@ -4,4 +4,6 @@ export class AccountModel {
     name: string;
     salary: number;
     categoryAccount: ClassifierModel;
+    nameCategory: string;
+
 }
