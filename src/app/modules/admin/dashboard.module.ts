@@ -12,6 +12,8 @@ import { CategoryMovementComponent } from './category-movement/category-movement
 import { CategoryMovementModelComponent } from './category-movement/category-movement-model/category-movement-model.component';
 import { CategoryAcountModelComponent } from './category-acount/category-acount-model/category-acount-model.component';
 import { MovementModelComponent } from './movements/movement-model/movement-model.component';
+import { TransferMovementComponent } from './transfer-movement/transfer-movement.component';
+import { TransferMovementModelComponent } from './transfer-movement/transfer-movement-model/transfer-movement-model.component';
 
 
 
@@ -25,7 +27,9 @@ import { MovementModelComponent } from './movements/movement-model/movement-mode
     CategoryMovementComponent,
     CategoryMovementModelComponent,
     CategoryAcountModelComponent,
-    MovementModelComponent
+    MovementModelComponent,
+    TransferMovementComponent,
+    TransferMovementModelComponent
   ],
   imports: [
     RouterModule.forChild(adminRoutes),

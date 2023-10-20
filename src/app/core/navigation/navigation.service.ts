@@ -47,6 +47,14 @@ export class NavigationService {
 
         menu.push({
             id: '444',
+            title: 'TRANSFERENCIA DE CUENTA',
+            type: 'basic',
+            icon: 'heroicons_outline:home',
+            link: 'dashboard/movements-transfer',
+        });
+
+        menu.push({
+            id: '444',
             title: 'LISTA DE CUENTAS',
             type: 'basic',
             icon: 'heroicons_outline:home',
