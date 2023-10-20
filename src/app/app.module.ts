@@ -12,6 +12,7 @@ import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgxWebstorageModule } from 'ngx-webstorage';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -37,6 +38,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     LayoutModule,
 
     // 3rd party modules that require global configuration via forRoot
+    ToastrModule.forRoot(),
     MarkdownModule.forRoot({}),
     NgxWebstorageModule.forRoot({
       prefix: 'wallet',

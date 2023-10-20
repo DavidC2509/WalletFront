@@ -21,4 +21,13 @@ export class MovementService {
             }
         );
     }
+
+    public storeMovement(data: any): Observable<HttpResponse<any>> {
+        return this.http.post(
+            `${this.baseUrl}/movement/account/` + data.accountId, data,
+            {
+                observe: 'response',
+            }
+        );
+    }
 }

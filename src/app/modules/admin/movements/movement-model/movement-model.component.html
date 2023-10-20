@@ -1,0 +1,168 @@
+<div class="w-full">
+  <form [formGroup]="form">
+    <div class="w-full">
+      <div class="text-xl">Movimiento</div>
+      <div class="text-secondary">
+        Los siguientes campos deben ser llenados de forma obligatoria.
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-6 w-full mt-8">
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Cuenta</mat-label>
+            <mat-select [formControlName]="'accountId'">
+              <mat-option
+                *ngFor="let module of modulesAccount"
+                [value]="module.id"
+                >{{ module.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('accountId').invalid &&
+                form.get('accountId').touched) ||
+              form.get('accountId').dirty
+            "
+          >
+            <mat-error *ngIf="form.get('accountId')?.hasError('required')">
+              Cuenta es requerido.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Descripcion</mat-label>
+            <input [formControlName]="'descripcion'" matInput />
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('descripcion').invalid &&
+                form.get('descripcion').touched) ||
+              form.get('descripcion').dirty
+            "
+          >
+            <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
+              Descripcion es requerido.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Cantidad</mat-label>
+            <input [formControlName]="'amount'" type="number" matInput />
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('amount').invalid && form.get('amount').touched) ||
+              form.get('amount').dirty
+            "
+          >
+            <mat-error *ngIf="form.get('amount')?.hasError('required')">
+              Cantidad es requerido.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Fecha</mat-label>
+            <input [formControlName]="'date'" type="date" matInput />
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('date').invalid && form.get('date').touched) ||
+              form.get('date').dirty
+            "
+          >
+            <mat-error *ngIf="form.get('date')?.hasError('required')">
+              Fecha es requerido.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Categoria Movimiento</mat-label>
+            <mat-select [formControlName]="'categoryMovementId'">
+              <mat-option
+                *ngFor="let module of modulesCategoryMovement"
+                [value]="module.id"
+                >{{ module.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('categoryMovementId').invalid &&
+                form.get('categoryMovementId').touched) ||
+              form.get('categoryMovementId').dirty
+            "
+          >
+            <mat-error
+              *ngIf="form.get('categoryMovementId')?.hasError('required')"
+            >
+              Categoria Movimiento es requerido.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Tipo de Movimiento</mat-label>
+            <mat-select [formControlName]="'typeMovement'">
+              <mat-option
+                *ngFor="let module of modulesTypeMovement"
+                [value]="module"
+                >{{ getTypeMovement(module) }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('typeMovement').invalid &&
+                form.get('typeMovement').touched) ||
+              form.get('typeMovement').dirty
+            "
+          >
+            <mat-error *ngIf="form.get('typeMovement')?.hasError('required')">
+              Tipo Movimiento es requerido.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-11 mb-10 border-t"></div>
+
+    <div class="flex items-center justify-end">
+      <button (click)="onCancel()" mat-stroked-button type="button">
+        Cancelar
+      </button>
+      <button
+        (click)="onSave()"
+        class="ml-4"
+        mat-flat-button
+        type="button"
+        [disabled]="form.invalid"
+        [color]="'primary'"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>

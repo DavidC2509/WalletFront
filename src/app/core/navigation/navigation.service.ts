@@ -39,10 +39,10 @@ export class NavigationService {
 
         menu.push({
             id: '444',
-            title: 'LISTA DE TRANSACCIONES',
+            title: 'LISTA DE MOVIMIENTO',
             type: 'basic',
             icon: 'heroicons_outline:home',
-            link: 'dashboard/transactions-list',
+            link: 'dashboard/movements',
         });
 
         menu.push({
@@ -50,7 +50,23 @@ export class NavigationService {
             title: 'LISTA DE CUENTAS',
             type: 'basic',
             icon: 'heroicons_outline:home',
-            link: 'dashboard/accounts-list',
+            link: 'dashboard/accounts',
+        });
+
+        menu.push({
+            id: '444',
+            title: 'CATEGORIA DE CUENTAS',
+            type: 'basic',
+            icon: 'heroicons_outline:home',
+            link: 'dashboard/category-accounts',
+        });
+
+        menu.push({
+            id: '444',
+            title: 'CATEGORIA DE MOVIMIENTOS',
+            type: 'basic',
+            icon: 'heroicons_outline:home',
+            link: 'dashboard/category-movements',
         });
 
         this._navigation.compact = menu;

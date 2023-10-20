@@ -3,6 +3,7 @@ import { UntypedFormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { TYPE_MODE_LIST } from 'app/core/const';
 
 @Component({
   selector: 'shared-table',
@@ -27,6 +28,8 @@ export class TableComponent implements OnInit, OnChanges {
 
   public paginatedData: Array<any> = [];
   public totalSize: number = 0;
+
+  protected readonly TYPE_MODE_LIST = TYPE_MODE_LIST;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,

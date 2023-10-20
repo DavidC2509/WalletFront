@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { configTableMovement, configTableAccount } from './dashboard.config';
 import { MovementModel } from '../models/MovementModel';
 import { AccountModel } from '../models/AccountModel';
-import { AccountService } from '../services/account.service';
+import { AccountService } from '../services/Account.service';
 import { MovementService } from '../services/Movement.service';
 
 @Component({

@@ -20,4 +20,13 @@ export class AccountService {
       }
     );
   }
+
+  public storeAccount(data: any): Observable<HttpResponse<any>> {
+    return this.http.post(
+      `${this.baseUrl}/account`, data,
+      {
+        observe: 'response',
+      }
+    );
+  }
 }

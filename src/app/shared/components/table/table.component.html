@@ -25,6 +25,15 @@
               </mat-icon>
             </ng-container>
           </ng-container>
+
+
+          <ng-container *ngIf="column.type === 'typeMovement'" >
+            <span
+              class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase"
+              [ngClass]="getStatusColorPayments(row[column.columnDef], TYPE_MODE_LIST)">
+              <span class="leading-relaxed whitespace-nowrap">{{getStatusLabel(row[column.columnDef], TYPE_MODE_LIST)}}</span>
+            </span>
+          </ng-container>
   
           <ng-container *ngIf="column.type === 'actions'">
             <ng-container *ngFor="let action of column.actionsList">

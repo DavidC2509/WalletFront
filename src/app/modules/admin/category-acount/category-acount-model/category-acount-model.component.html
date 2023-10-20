@@ -1,0 +1,52 @@
+<div class="w-full">
+    <form [formGroup]="form">
+      <div class="w-full">
+        <div class="text-xl">Categoria Cuentas</div>
+        <div class="text-secondary">
+          Los siguientes campos deben ser llenados de forma obligatoria.
+        </div>
+      </div>
+  
+      <div class="grid sm:grid-cols-2 gap-6 w-full mt-8">
+        <div class="grid sm:grid-cols-2 w-full">
+          <div class="sm:col-span-4">
+            <mat-form-field class="fuse-mat-no-subscript w-full">
+              <mat-label>Nombre</mat-label>
+              <input [formControlName]="'name'" matInput />
+            </mat-form-field>
+            <div
+              *ngIf="
+                (form.get('name').invalid && form.get('name').touched) ||
+                form.get('name').dirty
+              "
+            >
+              <mat-error *ngIf="form.get('name')?.hasError('required')">
+                Nombre es requerido.
+              </mat-error>
+            </div>
+          </div>
+        </div>
+  
+    
+      </div>
+  
+      <div class="mt-11 mb-10 border-t"></div>
+  
+      <div class="flex items-center justify-end">
+        <button (click)="onCancel()" mat-stroked-button type="button">
+          Cancelar
+        </button>
+        <button
+          (click)="onSave()"
+          class="ml-4"
+          mat-flat-button
+          type="button"
+          [disabled]="form.invalid"
+          [color]="'primary'"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+  

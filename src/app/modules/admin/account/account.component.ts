@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, exhaustMap, filter } from 'rxjs';
 import { AccountModel } from '../models/AccountModel';
 import { accountConfigTable } from './account.config';
 import { MatDialog } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { AccountService } from '../services/account.service';
+import { AccountService } from '../services/Account.service';
 import { ToastrService } from 'ngx-toastr';
+import { AccountModelComponent } from './account-model/account-model.component';
+import { CREATE_ERROR, CREATE_SUCCESS } from 'app/core/const';
 
 @Component({
   selector: 'app-account',
@@ -18,7 +20,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
   constructor(
-    private _fuseConfirmationService: FuseConfirmationService,
     private accountService: AccountService,
     public dialog: MatDialog,
     private toastrService: ToastrService
@@ -35,33 +36,36 @@ export class AccountComponent implements OnInit, OnDestroy {
   private loadData(): void {
     this.subscription.add(
       this.accountService.getListAccount().subscribe((res) => {
+        res.body.forEach(a => a.nameCategory = a.categoryAccount.name);
         this.data$.next(res.body);
       })
     );
   }
 
-  // public onNew(): void {
-  //   const dialogRef = this.dialog.open(PlatformModalComponent, {
-  //     data: null,
-  //     disableClose: true,
-  //     width: '800px',
-  //   });
-  //   dialogRef
-  //     .afterClosed()
-  //     .pipe(
-  //       filter((s) => s),
-  //       exhaustMap((res) => this.platformService.createPlatform(res))
-  //     )
-  //     .subscribe(
-  //       () => {
-  //         this.toastrService.success(CREATE_SUCCESS);
-  //         this.loadData();
-  //       },
-  //       () => {
-  //         this.toastrService.error(CREATE_ERROR);
-  //       }
-  //     );
-  // }
+  public onNew(): void {
+    const dialogRef = this.dialog.open(AccountModelComponent, {
+      data: null,
+      disableClose: true,
+      width: '800px',
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter((s) => s),
+        exhaustMap((res) => this.accountService.storeAccount(res))
+      )
+      .subscribe(
+        {
+          next: () => {
+            this.toastrService.success(CREATE_SUCCESS);
+            this.loadData();
+          },
+          error: () => {
+            this.toastrService.error(CREATE_ERROR);
+          }
+        }
+      );
+  }
 
   // public onAction(event: { type: string; row: any }): void {
   //   if (event.type === 'edit') {

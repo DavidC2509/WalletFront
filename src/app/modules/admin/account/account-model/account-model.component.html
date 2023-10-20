@@ -1,76 +1,94 @@
-<!-- <div class="w-full">
-    <form [formGroup]="form">
-      <div class="w-full">
-        <div class="text-xl">Plataforma</div>
-        <div class="text-secondary">Los siguientes campos deben ser llenados de forma obligatoria.</div>
+<div class="w-full">
+  <form [formGroup]="form">
+    <div class="w-full">
+      <div class="text-xl">Cuentas</div>
+      <div class="text-secondary">
+        Los siguientes campos deben ser llenados de forma obligatoria.
       </div>
-  
-      <div class="grid sm:grid-cols-2 gap-6 w-full mt-8">
-  
-        <div class="grid sm:grid-cols-2 w-full">
-          <div class="sm:col-span-4">
-            <mat-form-field class="fuse-mat-no-subscript w-full">
-              <mat-label>Nombre</mat-label>
-              <input [formControlName]="'name'"
-                     matInput>
-            </mat-form-field>
-            <div
-              *ngIf="(form.get('name').invalid && form.get('name').touched) || form.get('name').dirty">
-              <mat-error *ngIf="form.get('name')?.hasError('required')">
-                Nombre es requerido.
-              </mat-error>
-            </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-6 w-full mt-8">
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Nombre</mat-label>
+            <input [formControlName]="'name'" matInput />
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('name').invalid && form.get('name').touched) ||
+              form.get('name').dirty
+            "
+          >
+            <mat-error *ngIf="form.get('name')?.hasError('required')">
+              Nombre es requerido.
+            </mat-error>
           </div>
         </div>
-  
-        <div class="grid sm:grid-cols-2 w-full">
-          <div class="sm:col-span-4">
-            <mat-form-field class="fuse-mat-no-subscript w-full">
-              <mat-label>Descripcion</mat-label>
-              <input [formControlName]="'description'"
-                     matInput>
-            </mat-form-field>
-            <div
-              *ngIf="(form.get('description').invalid && form.get('description').touched) || form.get('description').dirty">
-              <mat-error *ngIf="form.get('description')?.hasError('required')">
-                Descripcion es requerido.
-              </mat-error>
-            </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Salario</mat-label>
+            <input [formControlName]="'salary'" type="number" matInput />
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('salary').invalid && form.get('salary').touched) ||
+              form.get('salary').dirty
+            "
+          >
+            <mat-error *ngIf="form.get('salary')?.hasError('required')">
+              Salario es requerido.
+            </mat-error>
           </div>
         </div>
-  
-        <div class="grid sm:grid-cols-2 w-full">
-          <div class="sm:col-span-4">
-            <div class="fuse-mat-no-subscript w-full">
-              <mat-checkbox
-                class="example-margin"
-                [formControlName]="'active'">
-                Activar
-              </mat-checkbox>
-            </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 w-full">
+        <div class="sm:col-span-4">
+          <mat-form-field class="fuse-mat-no-subscript w-full">
+            <mat-label>Categoria Compañia</mat-label>
+            <mat-select [formControlName]="'categoryAccountId'">
+              <mat-option *ngFor="let module of modules" [value]="module.id">{{
+                module.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div
+            *ngIf="
+              (form.get('categoryAccountId').invalid &&
+                form.get('categoryAccountId').touched) ||
+              form.get('categoryAccountId').dirty
+            "
+          >
+            <mat-error
+              *ngIf="form.get('categoryAccountId')?.hasError('required')"
+            >
+              Compania es requerido.
+            </mat-error>
           </div>
         </div>
-  
       </div>
-  
-      <div class="mt-11 mb-10 border-t"></div>
-  
-      <div class="flex items-center justify-end">
-        <button (click)="onCancel()"
-                mat-stroked-button
-                type="button">
-          Cancelar
-        </button>
-        <button (click)="onSave()"
-                class="ml-4"
-                mat-flat-button
-                type="button"
-                [disabled]="form.invalid"
-                [color]="'primary'">
-          Guardar
-        </button>
-      </div>
-    </form>
-  
-  </div>
-   -->
+    </div>
+
+    <div class="mt-11 mb-10 border-t"></div>
+
+    <div class="flex items-center justify-end">
+      <button (click)="onCancel()" mat-stroked-button type="button">
+        Cancelar
+      </button>
+      <button
+        (click)="onSave()"
+        class="ml-4"
+        mat-flat-button
+        type="button"
+        [disabled]="form.invalid"
+        [color]="'primary'"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>
