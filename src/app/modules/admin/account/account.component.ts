@@ -7,7 +7,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { AccountService } from '../services/Account.service';
 import { ToastrService } from 'ngx-toastr';
 import { AccountModelComponent } from './account-model/account-model.component';
-import { CREATE_ERROR, CREATE_SUCCESS } from 'app/core/const';
+import { CREATE_ERROR, CREATE_SUCCESS, UPDATE_ERROR, UPDATE_SUCCESS } from 'app/core/const';
 
 @Component({
   selector: 'app-account',
@@ -67,66 +67,36 @@ export class AccountComponent implements OnInit, OnDestroy {
       );
   }
 
-  // public onAction(event: { type: string; row: any }): void {
-  //   if (event.type === 'edit') {
-  //     this.onEdit(event.row);
-  //   }
-  //   if (event.type === 'delete') {
-  //     this.onDelete(event.row);
-  //   }
-  // }
+  public onAction(event: { type: string; row: any }): void {
+    if (event.type === 'edit') {
+      this.onEdit(event.row);
+    }
+  }
 
-  // private onEdit(row: any): void {
-  //   this.platformService
-  //     .getByIdPlatform(row.id)
-  //     .pipe(
-  //       exhaustMap((res) => {
-  //         const dialogRef = this.dialog.open(PlatformModalComponent, {
-  //           data: res.body,
-  //           disableClose: true,
-  //           width: '800px',
-  //         });
-  //         return dialogRef.afterClosed();
-  //       }),
-  //       filter((s) => s),
-  //       exhaustMap((res) => this.platformService.updatePlatform(res))
-  //     )
-  //     .subscribe(
-  //       () => {
-  //         this.toastrService.success(UPDATE_SUCCESS);
-  //         this.loadData();
-  //       },
-  //       () => {
-  //         this.toastrService.error(UPDATE_ERROR);
-  //       }
-  //     );
-  // }
+  private onEdit(row: any): void {
+    this.accountService
+      .getAccount(row.id)
+      .pipe(
+        exhaustMap((res) => {
+          const dialogRef = this.dialog.open(AccountModelComponent, {
+            data: res.body,
+            disableClose: true,
+            width: '800px',
+          });
+          return dialogRef.afterClosed();
+        }),
+        filter((s) => s),
+        exhaustMap((res) => this.accountService.updateAccount(res))
+      )
+      .subscribe(
+        () => {
+          this.toastrService.success(UPDATE_SUCCESS);
+          this.loadData();
+        },
+        () => {
+          this.toastrService.error(UPDATE_ERROR);
+        }
+      );
+  }
 
-  // private onDelete(row: any): void {
-  //   const confirmation = this._fuseConfirmationService.open({
-  //     title: 'Delete platform',
-  //     message: `está seguro de que desea eliminar Platform con ID ${row.id} ?`,
-  //     actions: {
-  //       confirm: {
-  //         label: 'Delete',
-  //       },
-  //     },
-  //   });
-
-  //   confirmation
-  //     .afterClosed()
-  //     .pipe(
-  //       filter((res) => res === 'confirmed'),
-  //       exhaustMap((res) => this.platformService.deletePlatform(row.id))
-  //     )
-  //     .subscribe(
-  //       () => {
-  //         this.toastrService.success(DELETE_SUCCESS);
-  //         this.loadData();
-  //       },
-  //       () => {
-  //         this.toastrService.error(DELETE_ERROR);
-  //       }
-  //     );
-  // }
 }

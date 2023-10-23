@@ -29,4 +29,23 @@ export class AccountService {
       }
     );
   }
+
+  public updateAccount(data: any): Observable<HttpResponse<any>> {
+    return this.http.put(
+      `${this.baseUrl}/account`, data,
+      {
+        observe: 'response',
+      }
+    );
+  }
+
+
+  public getAccount(id: string): Observable<HttpResponse<AccountModel>> {
+    return this.http.get<AccountModel>(
+      `${this.baseUrl}/account/` + id,
+      {
+        observe: 'response',
+      }
+    );
+  }
 }

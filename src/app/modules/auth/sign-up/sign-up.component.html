@@ -7,12 +7,12 @@
             </div>
 
             <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign up</div>
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Registrarse</div>
             <div class="flex items-baseline mt-0.5 font-medium">
-                <div>Already have an account?</div>
+                <div>Ya tienes una cuenta?</div>
                 <a
                     class="ml-1 text-primary-500 hover:underline"
-                    [routerLink]="['/user/sign-in']">Sign in
+                    [routerLink]="['/user/sign-in']">Iniciar
                 </a>
             </div>
 
@@ -34,28 +34,28 @@
 
                 <!-- Name field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Name</mat-label>
+                    <mat-label>Nombre</mat-label>
                     <input
                         matInput
                         [formControlName]="'firstName'">
                     <mat-error *ngIf="signUpForm.get('firstName').hasError('required')">
-                        Name is required
+                        Nombre is required
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="w-full">
-                    <mat-label>Last name</mat-label>
+                    <mat-label>Apellido</mat-label>
                     <input
                         matInput
                         [formControlName]="'lastName'">
                     <mat-error *ngIf="signUpForm.get('lastName').hasError('required')">
-                        LastName name is required
+                        Apellido is required
                     </mat-error>
                 </mat-form-field>
 
                 <!-- Email field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Email address</mat-label>
+                    <mat-label>Correo Electronico</mat-label>
                     <input
                         id="email"
                         matInput
@@ -70,7 +70,7 @@
 
                 <!-- Password field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Password</mat-label>
+                    <mat-label>Contraseña</mat-label>
                     <input
                         matInput
                         type="password"
@@ -91,13 +91,13 @@
                             [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
                     </button>
                     <mat-error>
-                        Password is required
+                        Contraseña is required
                     </mat-error>
                 </mat-form-field>
 
                 <!-- Company field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Phone Number</mat-label>
+                    <mat-label>Numero Telefono</mat-label>
                     <input
                         matInput
                         [formControlName]="'phoneNumber'">
@@ -112,7 +112,7 @@
                     [disabled]="signUpForm.disabled"
                     (click)="signUp()">
                     <span *ngIf="!signUpForm.disabled">
-                        Create your free account
+                        Crear Cuenta
                     </span>
                     <mat-progress-spinner
                         *ngIf="signUpForm.disabled"

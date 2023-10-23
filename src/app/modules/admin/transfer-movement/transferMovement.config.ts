@@ -13,7 +13,13 @@ export const movementTransferConfigTable = [
                 tooltipText: 'Editar',
                 icon: 'heroicons_solid:pencil',
                 classColor: 'text-blue-400',
-            }
+            }, 
+            {
+                type: 'delete',
+                tooltipText: 'Eliminar',
+                icon: 'heroicons_solid:trash',
+                classColor: 'text-red-400',
+            },
         ],
     },
 ];

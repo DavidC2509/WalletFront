@@ -30,4 +30,31 @@ export class MovementService {
             }
         );
     }
+
+    public updateMovement(data: any): Observable<HttpResponse<any>> {
+        return this.http.put(
+            `${this.baseUrl}/movement/` + data.id, data,
+            {
+                observe: 'response',
+            }
+        );
+    }
+
+    public getMovement(id: string): Observable<HttpResponse<MovementModel>> {
+        return this.http.get<MovementModel>(
+            `${this.baseUrl}/movement/` + id,
+            {
+                observe: 'response',
+            }
+        );
+    }
+
+    public deleteMovement(id: string): Observable<HttpResponse<any>> {
+        return this.http.delete(
+            `${this.baseUrl}/movement/` + id,
+            {
+                observe: 'response',
+            }
+        );
+    }
 }

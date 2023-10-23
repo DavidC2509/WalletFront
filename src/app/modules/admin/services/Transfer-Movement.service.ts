@@ -31,4 +31,31 @@ export class TransferMovementService {
             }
         );
     }
+
+    public updateMovementTransfer(data: any): Observable<HttpResponse<any>> {
+        return this.http.put(
+            `${this.baseUrl}/movement-transfer/` + data.id, data,
+            {
+                observe: 'response',
+            }
+        );
+    }
+
+    public getMovementTransfer(id: string): Observable<HttpResponse<MovementTransferModel>> {
+        return this.http.get<MovementTransferModel>(
+            `${this.baseUrl}/movement-transfer/` + id,
+            {
+                observe: 'response',
+            }
+        );
+    }
+
+    public deleteMovementTransfer(id: string): Observable<HttpResponse<any>> {
+        return this.http.delete(
+            `${this.baseUrl}/movement-transfer/` + id,
+            {
+                observe: 'response',
+            }
+        );
+    }
 }

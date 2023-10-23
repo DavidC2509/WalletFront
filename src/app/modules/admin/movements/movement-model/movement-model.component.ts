@@ -40,14 +40,6 @@ export class MovementModelComponent {
   }
 
   public ngOnInit(): void {
-    if (this.data) {
-      this.form.setValue({
-        id: this.data.id,
-        name: this.data.name,
-        description: this.data.description,
-        active: this.data.active,
-      });
-    }
     this._categoryMovementService
       .getListCategoryMovement()
       .subscribe((res) => (this.modulesCategoryMovement = res.body));
@@ -55,6 +47,21 @@ export class MovementModelComponent {
     this._accountService
       .getListAccount()
       .subscribe((res) => (this.modulesAccount = res.body));
+    
+      
+    if (this.data) {
+      this.form.setValue({
+        id: this.data.id,
+        accountId: this.data.accountId,
+        descripcion: this.data.descripcion,
+        amount: this.data.amount,
+        date: this.data.date,
+        categoryMovementId: this.data.categoryMovement.id,
+        typeMovement: this.data.typeMovement,
+
+      });
+    }
+
   }
 
   public onSave(): void {

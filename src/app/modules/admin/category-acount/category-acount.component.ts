@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subscription, exhaustMap, filter } from 'rxjs';
 import { categoryAccountConfigTable } from './category-acount.config';
-import { CREATE_SUCCESS, CREATE_ERROR } from 'app/core/const';
+import { CREATE_SUCCESS, CREATE_ERROR, UPDATE_ERROR, UPDATE_SUCCESS, DELETE_ERROR, DELETE_SUCCESS } from 'app/core/const';
 import { CategoryAcountModelComponent } from './category-acount-model/category-acount-model.component';
 
 @Component({
@@ -65,66 +65,40 @@ export class CategoryAcountComponent implements OnInit, OnDestroy {
       );
   }
 
-  //  public onAction(event: { type: string; row: any }): void {
-  //   if (event.type === 'edit') {
-  //     this.onEdit(event.row);
-  //   }
-  //   if (event.type === 'delete') {
-  //     this.onDelete(event.row);
-  //   }
-  // }
+  public onAction(event: { type: string; row: any }): void {
+    if (event.type === 'edit') {
+      this.onEdit(event.row);
+    }
 
-  // private onEdit(row: any): void {
-  //   this.accountService
-  //     .getByIdPlatform(row.id)
-  //     .pipe(
-  //       exhaustMap((res) => {
-  //         const dialogRef = this.dialog.open(PlatformModalComponent, {
-  //           data: res.body,
-  //           disableClose: true,
-  //           width: '800px',
-  //         });
-  //         return dialogRef.afterClosed();
-  //       }),
-  //       filter((s) => s),
-  //       exhaustMap((res) => this.platformService.updatePlatform(res))
-  //     )
-  //     .subscribe(
-  //       () => {
-  //         this.toastrService.success(UPDATE_SUCCESS);
-  //         this.loadData();
-  //       },
-  //       () => {
-  //         this.toastrService.error(UPDATE_ERROR);
-  //       }
-  //     );
-  // }
+  }
 
-  // private onDelete(row: any): void {
-  //   const confirmation = this._fuseConfirmationService.open({
-  //     title: 'Delete platform',
-  //     message: `está seguro de que desea eliminar Platform con ID ${row.id} ?`,
-  //     actions: {
-  //       confirm: {
-  //         label: 'Delete',
-  //       },
-  //     },
-  //   });
+  private onEdit(row: any): void {
+    this.accountService
+      .getCategoryAccount(row.id)
+      .pipe(
+        exhaustMap((res) => {
+          const dialogRef = this.dialog.open(CategoryAcountModelComponent, {
+            data: res.body,
+            disableClose: true,
+            width: '800px',
+          });
+          return dialogRef.afterClosed();
+        }),
+        filter((s) => s),
+        exhaustMap((res) => this.accountService.updateCategoryAccount(res))
+      )
+      .subscribe(
+        {
+          next: () => {
+            this.toastrService.success(UPDATE_SUCCESS);
+            this.loadData();
+          },
+          error: () => {
+            this.toastrService.error(UPDATE_ERROR);
+          }
+        }
+      );
+  }
 
-  //   confirmation
-  //     .afterClosed()
-  //     .pipe(
-  //       filter((res) => res === 'confirmed'),
-  //       exhaustMap((res) => this.platformService.deletePlatform(row.id))
-  //     )
-  //     .subscribe(
-  //       () => {
-  //         this.toastrService.success(DELETE_SUCCESS);
-  //         this.loadData();
-  //       },
-  //       () => {
-  //         this.toastrService.error(DELETE_ERROR);
-  //       }
-  //     );
-  // }
+
 }

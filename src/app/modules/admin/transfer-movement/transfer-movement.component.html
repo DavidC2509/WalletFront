@@ -3,5 +3,7 @@
     <shared-table
       [data]="data$ | async"
       [columns]="columns"
+      (action)="onAction($event)"
+
     ></shared-table>
   </div>

@@ -27,28 +27,37 @@ export class TransferMovementModelComponent {
       accountDestiny: ['', [Validators.required]],
       amount: [0, [Validators.required]],
       date: [null, [Validators.required]]
-      
 
     });
   }
-
+  
   public ngOnInit(): void {
-    if (this.data) {
-      this.form.setValue({
-        id: this.data.id,
-        name: this.data.name,
-        description: this.data.description,
-        active: this.data.active,
-      });
-    }
 
     this._accountService
       .getListAccount()
-      .subscribe((res) => (this.modulesAccount = res.body));
+      .subscribe((res) => {
+        
+        this.modulesAccount = res.body
+        if (this.data) {
+          this.modulesOrigin = this.modulesAccount.filter(x => x.id != this.data.accountOriginId);
+        }
+      });
+
+    
+    if (this.data) {
+      this.form.setValue({
+        id: this.data.id,
+        accountOrigin: this.data.accountOriginId,
+        accountDestiny: this.data.accountDestinyId,
+        amount: this.data.amount,
+        date: this.data.date,
+      });
+    }
+
   }
 
   public onSave(): void {
-    
+
     this.dialogRef.close(this.form.value);
   }
 
@@ -56,9 +65,9 @@ export class TransferMovementModelComponent {
     this.dialogRef.close();
   }
 
-  public select(idOrigin : string): void {
-    
-    this.modulesOrigin = this.modulesAccount.filter(x => x.id != idOrigin );
+  public select(idOrigin: string): void {
+
+    this.modulesOrigin = this.modulesAccount.filter(x => x.id != idOrigin);
   }
 
 }

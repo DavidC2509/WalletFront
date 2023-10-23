@@ -27,17 +27,20 @@ export class AccountModelComponent {
   }
 
   public ngOnInit(): void {
+    this._categoryService
+      .getListCategoryAccount()
+      .subscribe((res) => (this.modules = res.body));
+
+    
     if (this.data) {
       this.form.setValue({
         id: this.data.id,
         name: this.data.name,
-        description: this.data.description,
-        active: this.data.active,
+        salary: this.data.salary,
+        categoryAccountId: this.data.categoryAccount.id,
       });
     }
-    this._categoryService
-      .getListCategoryAccount()
-      .subscribe((res) => (this.modules = res.body));
+    
   }
 
   public onSave(): void {

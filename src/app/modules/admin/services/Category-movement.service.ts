@@ -13,21 +13,41 @@ export class CategoryMovementService {
   constructor(private http: HttpClient) { }
 
   public getListCategoryMovement(): Observable<HttpResponse<ClassifierModel[]>> {
-      return this.http.get<ClassifierModel[]>(
-          `${this.baseUrl}/category-movement/list`,
-          {
-              observe: 'response',
-          }
-      );
+    return this.http.get<ClassifierModel[]>(
+      `${this.baseUrl}/category-movement/list`,
+      {
+        observe: 'response',
+      }
+    );
   }
 
   public storeCategoryMovement(data: any): Observable<HttpResponse<any>> {
-      return this.http.post(
-        `${this.baseUrl}/category-movement`, data,
-        {
-          observe: 'response',
-        }
-      );
-    }
+    return this.http.post(
+      `${this.baseUrl}/category-movement`, data,
+      {
+        observe: 'response',
+      }
+    );
+  }
+
+  public updateCategoryMovement(data: any): Observable<HttpResponse<any>> {
+    return this.http.put(
+      `${this.baseUrl}/category-movement`, data,
+      {
+        observe: 'response',
+      }
+    );
+  }
+
+
+
+  public getCategoryMovementt(id: string): Observable<HttpResponse<ClassifierModel>> {
+    return this.http.get<ClassifierModel>(
+      `${this.baseUrl}/category-movement/` + id,
+      {
+        observe: 'response',
+      }
+    );
+  }
 
 }

@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CategoryMovementService } from '../services/Category-movement.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CREATE_SUCCESS, CREATE_ERROR } from 'app/core/const';
+import { CREATE_SUCCESS, CREATE_ERROR, UPDATE_ERROR, UPDATE_SUCCESS } from 'app/core/const';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Subscription, filter, exhaustMap } from 'rxjs';
 import { CategoryAcountModelComponent } from '../category-acount/category-acount-model/category-acount-model.component';
 import { categoryAccountConfigTable } from '../category-acount/category-acount.config';
 import { ClassifierModel } from '../models/ClassifierModel';
+import { CategoryMovementModelComponent } from './category-movement-model/category-movement-model.component';
 
 @Component({
   selector: 'app-category-movement',
@@ -19,7 +20,7 @@ export class CategoryMovementComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
   constructor(
-    private accountService: CategoryMovementService,
+    private movementService: CategoryMovementService,
     public dialog: MatDialog,
     private toastrService: ToastrService
   ) { }
@@ -34,14 +35,14 @@ export class CategoryMovementComponent implements OnInit, OnDestroy {
 
   private loadData(): void {
     this.subscription.add(
-      this.accountService.getListCategoryMovement().subscribe((res) => {
+      this.movementService.getListCategoryMovement().subscribe((res) => {
         this.data$.next(res.body);
       })
     );
   }
 
   public onNew(): void {
-    const dialogRef = this.dialog.open(CategoryAcountModelComponent, {
+    const dialogRef = this.dialog.open(CategoryMovementModelComponent, {
       data: null,
       disableClose: true,
       width: '800px',
@@ -50,7 +51,7 @@ export class CategoryMovementComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         filter((s) => s),
-        exhaustMap((res) => this.accountService.storeCategoryMovement(res))
+        exhaustMap((res) => this.movementService.storeCategoryMovement(res))
       )
       .subscribe(
         {
@@ -60,6 +61,41 @@ export class CategoryMovementComponent implements OnInit, OnDestroy {
           },
           error: () => {
             this.toastrService.error(CREATE_ERROR);
+          }
+        }
+      );
+  }
+
+  public onAction(event: { type: string; row: any }): void {
+    if (event.type === 'edit') {
+      this.onEdit(event.row);
+    }
+
+  }
+
+  private onEdit(row: any): void {
+    this.movementService
+      .getCategoryMovementt(row.id)
+      .pipe(
+        exhaustMap((res) => {
+          const dialogRef = this.dialog.open(CategoryMovementModelComponent, {
+            data: res.body,
+            disableClose: true,
+            width: '800px',
+          });
+          return dialogRef.afterClosed();
+        }),
+        filter((s) => s),
+        exhaustMap((res) => this.movementService.updateCategoryMovement(res))
+      )
+      .subscribe(
+        {
+          next: () => {
+            this.toastrService.success(UPDATE_SUCCESS);
+            this.loadData();
+          },
+          error: () => {
+            this.toastrService.error(UPDATE_ERROR);
           }
         }
       );
