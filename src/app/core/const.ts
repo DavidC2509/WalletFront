@@ -14,6 +14,9 @@ export enum TypeMovement {
 
 
   export const TYPE_MODE_LIST = [
-    { value: 0, label: 'Ingreso', color: 'bg-orange-200 text-orange-800 dark:bg-orange-600 dark:text-orange-50' },
-    { value: 1, label: 'Gastos', color: 'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50' },
+    { value: 0, label: 'Ingreso', color: 'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50' },
+    { value: 1, label: 'Gastos', color: 'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50' },
+    { value: 2, label: 'Ingreso Transferencia', color: 'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50' },
+    { value: 3, label: 'Salida Transferencia', color: 'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50' },
+
   ];

@@ -1,1 +1,124 @@
-<p>transfer-movement-model works!</p>
+<div class="w-full">
+    <form [formGroup]="form">
+      <div class="w-full">
+        <div class="text-xl">Movimiento</div>
+        <div class="text-secondary">
+          Los siguientes campos deben ser llenados de forma obligatoria.
+        </div>
+      </div>
+  
+      <div class="grid sm:grid-cols-2 gap-6 w-full mt-8">
+        <div class="grid sm:grid-cols-2 w-full">
+          <div class="sm:col-span-4">
+            <mat-form-field class="fuse-mat-no-subscript w-full">
+              <mat-label>Cuenta Origen</mat-label>
+              <mat-select [formControlName]="'accountOrigin'"
+              (selectionChange)="select($event.value)">
+                <mat-option
+                  *ngFor="let module of modulesAccount"
+                  [value]="module.id"
+                  >{{ module.name }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+            <div
+              *ngIf="
+                (form.get('accountOrigin').invalid &&
+                  form.get('accountOrigin').touched) ||
+                form.get('accountOrigin').dirty
+              "
+            >
+              <mat-error *ngIf="form.get('accountOrigin')?.hasError('required')">
+                Cuenta Origin es requerido.
+              </mat-error>
+            </div>
+          </div>
+        </div>
+  
+        <div class="grid sm:grid-cols-2 w-full">
+            <div class="sm:col-span-4">
+              <mat-form-field *ngIf="modulesOrigin.length > 0" class="fuse-mat-no-subscript w-full">
+                <mat-label>Cuenta Destino</mat-label>
+                <mat-select [formControlName]="'accountDestiny'">
+                  <mat-option
+                    *ngFor="let module of modulesOrigin"
+                    [value]="module.id"
+                    >{{ module.name }}
+                    </mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <!-- <div
+                *ngIf="
+                  (form.get('modulesOrigin').invalid &&
+                    form.get('modulesOrigin').touched) ||
+                  form.get('modulesOrigin').dirty
+                "
+              >
+                <mat-error *ngIf="form.get('modulesOrigin')?.hasError('required')">
+                  Cuenta Destino es requerido.
+                </mat-error>
+              </div> -->
+            </div>
+          </div>
+  
+        <div class="grid sm:grid-cols-2 w-full">
+          <div class="sm:col-span-4">
+            <mat-form-field class="fuse-mat-no-subscript w-full">
+              <mat-label>Cantidad</mat-label>
+              <input [formControlName]="'amount'" type="number" matInput />
+            </mat-form-field>
+            <div
+              *ngIf="
+                (form.get('amount').invalid && form.get('amount').touched) ||
+                form.get('amount').dirty
+              "
+            >
+              <mat-error *ngIf="form.get('amount')?.hasError('required')">
+                Cantidad es requerido.
+              </mat-error>
+            </div>
+          </div>
+        </div>
+  
+        <div class="grid sm:grid-cols-2 w-full">
+          <div class="sm:col-span-4">
+            <mat-form-field class="fuse-mat-no-subscript w-full">
+              <mat-label>Fecha</mat-label>
+              <input [formControlName]="'date'" type="date" matInput />
+            </mat-form-field>
+            <div
+              *ngIf="
+                (form.get('date').invalid && form.get('date').touched) ||
+                form.get('date').dirty
+              "
+            >
+              <mat-error *ngIf="form.get('date')?.hasError('required')">
+                Fecha es requerido.
+              </mat-error>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+  
+      <div class="mt-11 mb-10 border-t"></div>
+  
+      <div class="flex items-center justify-end">
+        <button (click)="onCancel()" mat-stroked-button type="button">
+          Cancelar
+        </button>
+        <button
+          (click)="onSave()"
+          class="ml-4"
+          mat-flat-button
+          type="button"
+          [disabled]="form.invalid"
+          [color]="'primary'"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+  

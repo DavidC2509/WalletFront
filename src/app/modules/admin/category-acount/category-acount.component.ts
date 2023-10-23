@@ -64,4 +64,67 @@ export class CategoryAcountComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  //  public onAction(event: { type: string; row: any }): void {
+  //   if (event.type === 'edit') {
+  //     this.onEdit(event.row);
+  //   }
+  //   if (event.type === 'delete') {
+  //     this.onDelete(event.row);
+  //   }
+  // }
+
+  // private onEdit(row: any): void {
+  //   this.accountService
+  //     .getByIdPlatform(row.id)
+  //     .pipe(
+  //       exhaustMap((res) => {
+  //         const dialogRef = this.dialog.open(PlatformModalComponent, {
+  //           data: res.body,
+  //           disableClose: true,
+  //           width: '800px',
+  //         });
+  //         return dialogRef.afterClosed();
+  //       }),
+  //       filter((s) => s),
+  //       exhaustMap((res) => this.platformService.updatePlatform(res))
+  //     )
+  //     .subscribe(
+  //       () => {
+  //         this.toastrService.success(UPDATE_SUCCESS);
+  //         this.loadData();
+  //       },
+  //       () => {
+  //         this.toastrService.error(UPDATE_ERROR);
+  //       }
+  //     );
+  // }
+
+  // private onDelete(row: any): void {
+  //   const confirmation = this._fuseConfirmationService.open({
+  //     title: 'Delete platform',
+  //     message: `está seguro de que desea eliminar Platform con ID ${row.id} ?`,
+  //     actions: {
+  //       confirm: {
+  //         label: 'Delete',
+  //       },
+  //     },
+  //   });
+
+  //   confirmation
+  //     .afterClosed()
+  //     .pipe(
+  //       filter((res) => res === 'confirmed'),
+  //       exhaustMap((res) => this.platformService.deletePlatform(row.id))
+  //     )
+  //     .subscribe(
+  //       () => {
+  //         this.toastrService.success(DELETE_SUCCESS);
+  //         this.loadData();
+  //       },
+  //       () => {
+  //         this.toastrService.error(DELETE_ERROR);
+  //       }
+  //     );
+  // }
 }
