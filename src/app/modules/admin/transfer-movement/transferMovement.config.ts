@@ -2,7 +2,7 @@ export const movementTransferConfigTable = [
     { columnDef: 'nameAccountOrigin', header: 'Cuenta Origin', type: 'text' },
     { columnDef: 'nameAccountDestiny', header: 'Cuenta Destino', type: 'text' },
     { columnDef: 'amount', header: 'Cantidad', type: 'number' },
-    { columnDef: 'date', header: 'Fecha', type: 'text' },
+    { columnDef: 'date', header: 'Fecha', type: 'date' },
     {
         columnDef: 'actions',
         header: 'Acciones',

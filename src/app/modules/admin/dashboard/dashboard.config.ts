@@ -1,9 +1,9 @@
 export const configTableMovement = [
   { columnDef: 'descripcion', header: 'Descripcion', type: 'text' },
   { columnDef: 'amount', header: 'Monto', type: 'text' },
-  { columnDef: 'categoryMovement.name', header: 'Categoria de movimiento', type: 'text' },
+  { columnDef: 'nameCategory', header: 'Categoria de movimiento', type: 'text' },
   { columnDef: 'typeMovement', header: 'Tipo Movimiento', type: 'typeMovement' },
-  { columnDef: 'Fecha', header: 'Fecha', type: 'text' },
+  { columnDef: 'date', header: 'Fecha', type: 'date' },
 ];
 
 export const configTableAccount = [

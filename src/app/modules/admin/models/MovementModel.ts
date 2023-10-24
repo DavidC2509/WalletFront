@@ -7,6 +7,7 @@ export class MovementModel {
     typeMovement: string;
     date: Date;
     categoryMovement: ClassifierModel;
+    nameCategory : String;
 }
 
 

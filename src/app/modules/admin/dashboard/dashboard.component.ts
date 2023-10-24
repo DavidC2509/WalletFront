@@ -49,6 +49,8 @@ export class DashboardComponent {
       .subscribe(
         {
           next: (value) => {
+            value.body.forEach(a => a.nameCategory = a.categoryMovement.name);
+
             this.dataMovement = value.body;
           }
         });

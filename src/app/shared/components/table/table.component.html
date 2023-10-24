@@ -9,6 +9,10 @@
             {{row[column.columnDef]}}
           </ng-container>
   
+          <ng-container *ngIf="column.type === 'date'">
+            {{geDate(row[column.columnDef])}}
+          </ng-container>
+
           <ng-container *ngIf="column.type === 'number'">
             <p>{{row[column.columnDef] | number:'1.2-2'}}</p>
           </ng-container>

@@ -68,6 +68,10 @@ export class TableComponent implements OnInit, OnChanges {
     }
   }
 
+  public geDate(value: string): string {
+    return value.substring(0,10)
+  }
+
   public getStatusColor(value: string, statusList: any): string {
     if (value) {
       let status = statusList.find((s) => s.value === value);
