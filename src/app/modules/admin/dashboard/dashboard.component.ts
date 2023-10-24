@@ -33,9 +33,9 @@ export class DashboardComponent {
       .subscribe(
         {
           next: (value) => {
-            value.body.forEach(a => this.totalTxAmount += a.salary);
-            value.body.forEach(a => a.nameCategory = a.categoryAccount.name);
-            this.dataAccounts = value.body;
+            value.forEach(a => this.totalTxAmount += a.salary);
+            value.forEach(a => a.nameCategory = a.categoryAccount.name);
+            this.dataAccounts = value;
 
           }
         });

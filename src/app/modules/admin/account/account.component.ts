@@ -36,8 +36,8 @@ export class AccountComponent implements OnInit, OnDestroy {
   private loadData(): void {
     this.subscription.add(
       this.accountService.getListAccount().subscribe((res) => {
-        res.body.forEach(a => a.nameCategory = a.categoryAccount.name);
-        this.data$.next(res.body);
+        res.forEach(a => a.nameCategory = a.categoryAccount.name);
+        this.data$.next(res);
       })
     );
   }
@@ -79,7 +79,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       .pipe(
         exhaustMap((res) => {
           const dialogRef = this.dialog.open(AccountModelComponent, {
-            data: res.body,
+            data: res,
             disableClose: true,
             width: '800px',
           });

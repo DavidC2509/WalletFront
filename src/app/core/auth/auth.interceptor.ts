@@ -8,13 +8,15 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthServerProvider } from './AuthServerProvider.Service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   /**
    * Constructor
    */
-  constructor(private _authService: AuthServerProvider) { }
+  constructor(private _authService: AuthServerProvider, private toastrService: ToastrService
+    ) { }
 
   /**
    * Intercept
@@ -41,19 +43,6 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     // Response
-    return next.handle(newReq).pipe(
-      catchError((error) => {
-        // Catch "401 Unauthorized" responses
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          // Sign out
-          this._authService.logout();
-
-          // Reload the app
-          location.reload();
-        }
-
-        return throwError(error);
-      })
-    );
+    return next.handle(newReq).pipe();
   }
 }

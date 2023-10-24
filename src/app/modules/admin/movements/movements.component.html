@@ -1,9 +1,15 @@
 <div class="flex flex-col flex-auto min-w-0 bg-card dark:bg-transparent">
-    <view-header [title]="'Movimiento'" (newAction)="onNew()"></view-header>
-    <shared-table
-      [data]="data$ | async"
-      [columns]="columns"
-      (action)="onAction($event)"
-
-    ></shared-table>
+  <div class="w-full px-4 pt-4">
+    <report-form
+      (search)="onSearch($event)"
+      [values]="formValues"
+      [isMovement]="true"
+    ></report-form>
   </div>
+  <view-header [title]="'Movimiento'" (newAction)="onNew()"></view-header>
+  <shared-table
+    [data]="data$ | async"
+    [columns]="columns"
+    (action)="onAction($event)"
+  ></shared-table>
+</div>

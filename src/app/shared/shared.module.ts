@@ -4,13 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableComponent } from './components/table/table.component';
 import { SharedMaterialModule } from './shared-material.module';
 import { ViewHeaderComponent } from './components/view-header/view-header.component';
+import { FormFilterComponent } from './components/form-filter/form-filter.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        SharedMaterialModule
+        SharedMaterialModule,
+        NgxSpinnerModule
     ],
     exports: [
         CommonModule,
@@ -18,13 +21,14 @@ import { ViewHeaderComponent } from './components/view-header/view-header.compon
         ReactiveFormsModule,
         SharedMaterialModule,
         TableComponent,
-        ViewHeaderComponent
+        ViewHeaderComponent,
+        FormFilterComponent,
     ],
     declarations: [
-      TableComponent,
-      ViewHeaderComponent
+        TableComponent,
+        ViewHeaderComponent,
+        FormFilterComponent,
     ]
 })
-export class SharedModule
-{
+export class SharedModule {
 }

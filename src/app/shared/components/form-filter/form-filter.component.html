@@ -1,0 +1,88 @@
+<form [formGroup]="form">
+  <div class="w-full">
+    <div class="text-xl">Busqueda Avanzada</div>
+  </div>
+
+  <div class="grid sm:grid-cols-3 gap-6 w-full mt-8">
+    <div class="grid sm:grid-cols-3 w-full">
+      <div class="sm:col-span-4">
+        <mat-form-field class="fuse-mat-no-subscript w-full">
+          <mat-label>Fecha de Inicio</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerStartDate"
+            [formControlName]="'startDate'"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickerStartDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerStartDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 w-full">
+      <div class="sm:col-span-4">
+        <mat-form-field class="fuse-mat-no-subscript w-full">
+          <mat-label>Fecha de Fin</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerEndDate"
+            [formControlName]="'endDate'"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickerEndDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerEndDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 w-full">
+      <div class="sm:col-span-4">
+        <mat-form-field class="fuse-mat-no-subscript w-full">
+          <mat-label>Cuenta</mat-label>
+          <mat-select [formControlName]="'accountId'">
+            <mat-option [value]="-1">Todos</mat-option>
+            <mat-option
+              *ngFor="let service of modulesAccount"
+              [value]="service.id"
+              >{{ service.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 w-full" *ngIf="isMovement">
+      <div class="sm:col-span-4">
+        <mat-form-field class="fuse-mat-no-subscript w-full">
+          <mat-label>Tipo Movimiento</mat-label>
+          <mat-select [formControlName]="'typeMovement'">
+            <mat-option [value]="-1">Todos</mat-option>
+            <mat-option
+              *ngFor="let module of modulesTypeMovement"
+              [value]="module"
+              >{{ getTypeMovement(module) }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 w-full items-end">
+      <div class="sm:col-span-4">
+        <button
+          mat-flat-button
+          type="button"
+          (click)="onSearch()"
+          [color]="'primary'"
+        >
+          Busqueda
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

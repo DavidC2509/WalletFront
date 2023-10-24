@@ -37,7 +37,7 @@ export class TransferMovementModelComponent {
       .getListAccount()
       .subscribe((res) => {
         
-        this.modulesAccount = res.body
+        this.modulesAccount = res
         if (this.data) {
           this.modulesOrigin = this.modulesAccount.filter(x => x.id != this.data.accountOriginId);
         }

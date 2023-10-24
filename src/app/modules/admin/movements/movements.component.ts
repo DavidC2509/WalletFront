@@ -10,6 +10,7 @@ import { MovementModelComponent } from './movement-model/movement-model.componen
 import { MovementModel } from '../models/MovementModel';
 import { movementConfigTable } from './movement.config';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { GlobalReportFilter } from '../models/global-report.model';
 
 @Component({
   selector: 'app-movements',
@@ -20,7 +21,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
   columns: Array<any> = movementConfigTable;
   data$ = new BehaviorSubject<MovementModel[]>([]);
   subscription: Subscription = new Subscription();
-
+  public formValues!: any;
   constructor(
     private movementService: MovementService,
     public dialog: MatDialog,
@@ -30,16 +31,21 @@ export class MovementsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.loadData();
+    this.subscription.add(
+      this.movementService.currentFilter().subscribe((filter: any) => {
+        this.formValues = filter.body;
+        this.loadData(filter);
+      })
+    );
   }
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  private loadData(): void {
+  private loadData(filter: GlobalReportFilter): void {
     this.subscription.add(
-      this.movementService.getListMovement().subscribe((res) => {
+      this.movementService.getListMovementFilter(filter).subscribe((res) => {
         this.data$.next(res.body);
       })
     );
@@ -61,10 +67,10 @@ export class MovementsComponent implements OnInit, OnDestroy {
         {
           next: () => {
             this.toastrService.success(CREATE_SUCCESS);
-            this.loadData();
+            this.onSearch(null);
           },
-          error: () => {
-            this.toastrService.error(CREATE_ERROR);
+          error: (error) => {
+            this.toastrService.error(error.error);
           }
         }
       );
@@ -85,7 +91,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
       .pipe(
         exhaustMap((res) => {
           const dialogRef = this.dialog.open(MovementModelComponent, {
-            data: res.body,
+            data: res,
             disableClose: true,
             width: '800px',
           });
@@ -98,7 +104,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
         {
           next: () => {
             this.toastrService.success(UPDATE_SUCCESS);
-            this.loadData();
+            this.onSearch(null);
           },
           error: () => {
             this.toastrService.error(UPDATE_ERROR);
@@ -108,7 +114,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
   }
 
   private onDelete(row: any): void {
-    debugger
+
     const confirmation = this._fuseConfirmationService.open({
       title: 'Eleminar',
       message: `está seguro de que desea eliminar Movimiento con ID ${row.id} ?`,
@@ -129,7 +135,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
         {
           next: () => {
             this.toastrService.success(DELETE_SUCCESS);
-            this.loadData();
+            this.onSearch(null);
           },
           error: () => {
             this.toastrService.error(DELETE_ERROR);
@@ -137,4 +143,10 @@ export class MovementsComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  public onSearch(values: any): void {
+    const filter = this.movementService.getFilter();
+    this.movementService.sendFilter({ ...filter, body: values });
+  }
+
 }

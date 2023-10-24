@@ -3,49 +3,39 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AccountModel } from '../models/AccountModel';
 import { Observable } from 'rxjs';
+import { HttpService } from 'app/core/auth/http.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
-  private baseUrl: string = environment.apiBaseUrl;
-
-  constructor(private http: HttpClient) { }
-
-  public getListAccount(): Observable<HttpResponse<AccountModel[]>> {
-    return this.http.get<AccountModel[]>(
-      `${this.baseUrl}/account/list`,
-      {
-        observe: 'response',
-      }
-    );
+export class AccountService extends HttpService {
+  constructor(http: HttpClient, spinner: NgxSpinnerService) {
+    super(http, spinner);
   }
 
-  public storeAccount(data: any): Observable<HttpResponse<any>> {
-    return this.http.post(
-      `${this.baseUrl}/account`, data,
-      {
-        observe: 'response',
-      }
-    );
+  public getListAccount() {
+
+    return this.get<AccountModel[]>(`/account/list`, true);
+
   }
 
-  public updateAccount(data: any): Observable<HttpResponse<any>> {
-    return this.http.put(
-      `${this.baseUrl}/account`, data,
-      {
-        observe: 'response',
-      }
+  public storeAccount(data: any) {
+    return this.post<any>(`/account`, data, true);
+
+  }
+
+  public updateAccount(data: any) {
+    return this.put(
+      `/account`, data, true
     );
   }
 
 
-  public getAccount(id: string): Observable<HttpResponse<AccountModel>> {
-    return this.http.get<AccountModel>(
-      `${this.baseUrl}/account/` + id,
-      {
-        observe: 'response',
-      }
+  public getAccount(id: string) {
+    return this.get<AccountModel>(
+      `/account/` + id,
+
     );
   }
 }

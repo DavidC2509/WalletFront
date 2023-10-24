@@ -55,6 +55,7 @@ export class CategoryAcountComponent implements OnInit, OnDestroy {
       .subscribe(
         {
           next: () => {
+            debugger
             this.toastrService.success(CREATE_SUCCESS);
             this.loadData();
           },

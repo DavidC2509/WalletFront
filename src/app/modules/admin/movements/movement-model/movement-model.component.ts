@@ -46,7 +46,7 @@ export class MovementModelComponent {
 
     this._accountService
       .getListAccount()
-      .subscribe((res) => (this.modulesAccount = res.body));
+      .subscribe((res) => (this.modulesAccount = res));
     
       
     if (this.data) {
