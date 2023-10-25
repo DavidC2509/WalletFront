@@ -50,16 +50,18 @@ export class MovementModelComponent {
     
       
     if (this.data) {
+      debugger
       this.form.setValue({
-        id: this.data.id,
-        accountId: this.data.accountId,
-        descripcion: this.data.descripcion,
-        amount: this.data.amount,
-        date: this.data.date,
-        categoryMovementId: this.data.categoryMovement.id,
-        typeMovement: this.data.typeMovement,
-
+        id: this.data.body.id,
+        accountId: this.data.body.accountId,
+        descripcion: this.data.body.descripcion,
+        amount: this.data.body.amount,
+        date: this.data.body.date.substring(0,10),
+        categoryMovementId: this.data.body.categoryMovement.id,
+        typeMovement: this.data.body.typeMovement,
+        
       });
+      this.form.controls['typeMovement'].disable();
     }
 
   }

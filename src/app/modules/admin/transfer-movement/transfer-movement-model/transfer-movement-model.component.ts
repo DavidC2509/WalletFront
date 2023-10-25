@@ -50,7 +50,7 @@ export class TransferMovementModelComponent {
         accountOrigin: this.data.accountOriginId,
         accountDestiny: this.data.accountDestinyId,
         amount: this.data.amount,
-        date: this.data.date,
+        date: this.data.date.substring(0,10),
       });
     }
 

@@ -85,7 +85,11 @@ export class MovementsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onEdit(row: any): void {
+  private onEdit(row: MovementModel): void {
+    debugger
+    if(row.typeMovement >= 2){
+      this.toastrService.error("No Puede modificar Transferencia si desea modificar a transferencia");
+    }else{
     this.movementService
       .getMovement(row.id)
       .pipe(
@@ -111,6 +115,7 @@ export class MovementsComponent implements OnInit, OnDestroy {
           }
         }
       );
+    }
   }
 
   private onDelete(row: any): void {
